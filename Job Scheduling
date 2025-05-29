@@ -1,0 +1,45 @@
+class Solution {
+    public int maxMeetings(int[] startarr, int[] endarr) {
+
+        int n = endarr.length;
+        
+        List<Pair> list = new ArrayList<>();
+
+        for( int i = 0; i < n; i ++){
+            list.add( new Pair(startarr[i], endarr[i]));
+        }
+
+        Collections.sort(list, new MyComparator());
+
+        int count = 1;
+
+        int i = 1;
+        int endTime = list.get(0).end;
+
+        while( i < n){
+            if( list.get(i).start > endTime){
+                count ++;
+                endTime = list.get(i).end;
+            }
+            i++;
+        }
+        return count;
+    
+    }
+    public class Pair{
+        int start;
+        int end;
+
+        public Pair( int start, int end){
+            this.start = start;
+            this.end = end;
+        }
+    }
+
+    public class MyComparator implements Comparator<Pair>{
+
+        public int compare( Pair a, Pair b){
+            return a.end - b.end;
+        }
+    }
+}
